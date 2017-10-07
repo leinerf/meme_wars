@@ -9,7 +9,7 @@ app.get('/',function(req, res){
 app.get('/me',function(req, res){
     res.render('idk');
 })
-
+app.use(express.static(__dirname + '/public'));
 //include DB;
 
 

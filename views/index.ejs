@@ -1,22 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Meme Gesture Rank</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css"/>
 </head>
-<body>
-
-<div class="my-class container">
-    <div id="idk">a</div>
-
+<body class="">
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col col-lg-8">
+                    <div id="meme"></div>
+                </div>
+                <div class="col col-lg-4">
+                    <h3>In order to move to another picture, swipe your hand.</h3>
+                    <h3>If you want to like our meme, circle your finger around the picture.</h3>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary">Like</button>
+                        <button type="button" class="btn btn-primary">13</button>
+                    </div>
+                </div>
+            </div>
+            <p class="text-primary bg-primary">Current gesture: <span id="gesture"></span></p>
+        </div>
+    </div>
+</body>
 </div>
 
 
 
-<p>gesture <span id="gesture">Gestures</span></p>
+
 <script src="http://js.leapmotion.com/leap-0.6.4.js"></script>
 <script>
     var imgs= [ "http://i3.kym-cdn.com/photos/images/newsfeed/001/217/729/f9a.jpg",
@@ -24,15 +41,15 @@
     "https://fthmb.tqn.com/gxyNkKkkTnHBdcQ0G-2Q27BLLas=/400x0/success-56a9fd1f3df78cf772abee09.jpg",
     "https://i.pinimg.com/736x/c5/e8/77/c5e877889a1fea74b5fe02c4003f71a9--teaching-memes-funny-teachers-in-may-meme.jpg",
     "https://media1.popsugar-assets.com/files/thumbor/Jd4nQ83myp6U6gWLzHV8aCkp6Lo/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2015/07/30/615/n/1922153/6f32db66ead6ded2_Screen_Shot_2015-07-29_at_5.21.10_PM/i/Funny-Beauty-Memes.png"]
-    var idk = document.getElementById('idk');
-    idk.innerHTML = '<img src="' +imgs[0] + '">';
+    var meme = document.getElementById('meme');
+    meme.innerHTML = '<img src="' +imgs[0] + '">';
     var controller = new Leap.Controller({
         enableGestures: true,
         frameEventName: 'animationFrame'
     });
 
 
-    var content = document.getElementById('gesture');
+    // var content = document.getElementById('gesture');
     var count = 0;
     controller.on('deviceFrame', function(frame) {
         // loop through available gestures
@@ -43,46 +60,48 @@
             switch( type ){
 
                 case "circle":
-                    if (gesture.state == "stop") {
-                        if (count ==0){
+                    if (gesture.state === "stop") {
+                        if (count === 0){
                             count = (imgs.length - 1);
                         } else {
                             count--;
                         }
-                        console
-                        console.log('circle');
+                        console.log("Circle");
+                        $('#gesture').html("Circle");
                     }
                     break;
 
                 case "swipe":
-                    if (gesture.state == "stop") {
-                        if (count == imgs.length - 1 ){
+                    if (gesture.state === "stop") {
+                        if (count === imgs.length - 1 ){
                             count = 0;
                         } else {
                             count++;
                         }
+                        console.log("Swipe");
+                        $('#gesture').html("Swipe");
                     }
                     break;
 
                 case "screenTap":
-                    if (gesture.state == "stop") {
+                    if (gesture.state === "stop") {
                         console.log('screenTap');
                     }
                     break;
 
                 case "keyTap":
-                    if (gesture.state == "stop") {
+                    if (gesture.state === "stop") {
                         console.log('keyTap');
                     }
                     break;
 
             }
-            console.log(count);
-            idk.innerHTML = '<img src="' +imgs[count] + '">'
+            //console.log(count);
+            meme.innerHTML = '<img src="' +imgs[count] + '">'
         }
     });
     controller.connect();
 </script>
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>
