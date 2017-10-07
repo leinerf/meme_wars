@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meme Gesture Rank</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+</head>
+<body>
+
+<div class="my-class container">
+    <div><img src="http://i3.kym-cdn.com/photos/images/newsfeed/001/217/729/f9a.jpg"/></div>
+    <div><img src="https://fthmb.tqn.com/f2E0oJLHltGUCxwGiDw8bRkIm08=/768x0/filters:no_upscale()/dicaprio3-583e33155f9b58d5b19e3a00.jpg"/></div>
+    <div><img src="https://fthmb.tqn.com/gxyNkKkkTnHBdcQ0G-2Q27BLLas=/400x0/success-56a9fd1f3df78cf772abee09.jpg"/></div>
+</div>
+
+<div class="paginator-center text-color text-center">
+    <ul>
+        <li class="prev"></li>
+        <li class="next"></li>
+    </ul>
+</div>
+
+
+<div id="output"></div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script src="https://js.leapmotion.com/leap-0.6.4.min.js"></script>
+
+<p>gesture <span id="gesture">Gestures</span></p>
+
+<script>
+    $(document).ready(function(){
+        $('.my-class').slick({
+            arrows: false,
+            dots: true,
+            infinite: true,
+            adaptiveHeight: true,
+        });
+    });
+
+    var controller = new Leap.Controller({
+        enableGestures: true,
+        frameEventName: 'animationFrame'
+    });
+
+    var el = document.getElementById('slick-slide-control00');
+
+    var content = document.getElementById('gesture');
+
+    controller.on('deviceFrame', function(frame) {
+        // loop through available gestures
+        for(var i = 0; i < frame.gestures.length; i++){
+            var gesture = frame.gestures[i];
+            var type    = gesture.type;
+
+            switch( type ){
+
+                case "circle":
+                    if (gesture.state == "stop") {
+                        content.innerHTML = 'circle';
+                        
+                        console.log('circle');
+                    }
+                    break;
+
+                case "swipe":
+                    if (gesture.state == "stop") {
+                        content.innerHTML = 'swipe';
+                        console.log('swipe')
+                    }
+                    break;
+
+                case "screenTap":
+                    if (gesture.state == "stop") {
+                        console.log('screenTap');
+                    }
+                    break;
+
+                case "keyTap":
+                    if (gesture.state == "stop") {
+                        console.log('keyTap');
+                    }
+                    break;
+
+            }
+        }
+    });
+    controller.connect();
+</script>
+
+</body>
+</html>
