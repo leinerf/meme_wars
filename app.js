@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var memeRoute = require('./routes/meme')
 var port =  process.env.PORT || 3000;
 var ip = process.env.IP || null;
-var database = process.env.DATABASEURL
+var database = process.env.DATABASEURL || 'mongodb://localhost/memeDB';
 
 //connect to mongoDB
 mongoose.connect(database,{useMongoClient:true});

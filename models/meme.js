@@ -1,4 +1,4 @@
-var database = process.env.DATABASEURL
+var database = process.env.DATABASEURL||'mongodb://localhost/memeDB';
 var mongoose = require("mongoose");
 mongoose.connect(database,{useMongoClient:true});
 
