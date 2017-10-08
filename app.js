@@ -13,8 +13,8 @@ if(process.env.PORT && process.env.IP){
     mongoose.connect('mongodb://'+dbuser+':'+dbpassword+'@ds113785.mlab.com:13785/memeshack4',{useMongoClient:true});
 } else {
     console.log('not production');
-    mongoose.connect("mongodb://localhost/memeDB",{useMongoClient:true});
-
+    mongoose.connect("mongodb://localhost/memeDB", {useMongoClient: true});
+};
 
 //sets up the view engine to ejs and views folder
 app.set('view engine', 'ejs');
