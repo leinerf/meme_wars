@@ -1,19 +1,31 @@
 var express = require('express');
 var app = express();
-
-app.set('view engine', 'ejs');
-
-app.get('/',function(req, res){
-    res.render('index');
-})
-app.get('/me',function(req, res){
-    res.render('idk');
-})
-app.use(express.static(__dirname + '/public'));
-//include DB;
-
-
+var mongoose = require('mongoose');
+var memeRoute = require('./routes/meme')
 var port =  process.env.PORT || 3000;
 var ip = process.env.IP || null;
 
+
+//connect to mongoDB
+if(process.env.IP && process.env.PORT){
+    mongoose.connect("mongodb://localhost/memeDB",{useMongoClient:true});
+} else {
+    mongoose.connect("mongodb://localhost/memeDB",{useMongoClient:true});
+}
+
+//sets up the view engine to ejs and views folder
+app.set('view engine', 'ejs');
+app.set('views', './views');
+
+//setups stylesheet in public
+app.use(express.static(__dirname + '/public'));
+
+//use routes from routes folder
+app.use('/', memeRoute);
+
+
+
+
+
+//starts the server
 app.listen(port, ip, function(){ console.log('server online')})

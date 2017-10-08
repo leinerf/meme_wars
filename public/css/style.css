@@ -1,3 +1,7 @@
+body {
+    background: #337ab7;
+}
+
 .jumbotron {
     border-radius: 5px;
     margin:3%;
@@ -30,4 +34,13 @@
 .btn:hover {
     background-color: #4CAF50;
     color: white;
+}
+
+#liked {
+    color: white;
+}
+
+.glyphicon-thumbs-up {
+    padding: 0;
+    font-size: 1.2em;
 }

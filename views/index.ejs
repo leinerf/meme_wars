@@ -14,18 +14,22 @@
         <div class="container">
             <div class="row">
                 <div class="col col-lg-8">
-                    <div id="meme"></div>
+                    <div class="container">
+                        <div id="meme"></div>
+                    </div>
                 </div>
                 <div class="col col-lg-4">
                     <h3>In order to move to another picture, swipe your hand.</h3>
                     <h3>If you want to like our meme, circle your finger around the picture.</h3>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary">Like</button>
-                        <button type="button" class="btn btn-primary">13</button>
+                        <button type="button" id="like-button" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-primary"><span id="likes"></span></button>
                     </div>
                 </div>
             </div>
-            <p class="text-primary bg-primary">Current gesture: <span id="gesture"></span></p>
+            <p class="text-primary bg-primary">Current gesture: <span id="gesture">None</span></p>
         </div>
     </div>
 </body>
@@ -36,13 +40,26 @@
 
 <script src="http://js.leapmotion.com/leap-0.6.4.js"></script>
 <script>
-    var imgs= [ "http://i3.kym-cdn.com/photos/images/newsfeed/001/217/729/f9a.jpg",
-    "https://fthmb.tqn.com/f2E0oJLHltGUCxwGiDw8bRkIm08=/768x0/filters:no_upscale()/dicaprio3-583e33155f9b58d5b19e3a00.jpg",
-    "https://fthmb.tqn.com/gxyNkKkkTnHBdcQ0G-2Q27BLLas=/400x0/success-56a9fd1f3df78cf772abee09.jpg",
-    "https://i.pinimg.com/736x/c5/e8/77/c5e877889a1fea74b5fe02c4003f71a9--teaching-memes-funny-teachers-in-may-meme.jpg",
-    "https://media1.popsugar-assets.com/files/thumbor/Jd4nQ83myp6U6gWLzHV8aCkp6Lo/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2015/07/30/615/n/1922153/6f32db66ead6ded2_Screen_Shot_2015-07-29_at_5.21.10_PM/i/Funny-Beauty-Memes.png"]
+
+    var imgs = [];
+    var likes = [];
+    var ids = [];
+    <%for(var i = 0; i < memes.length; i++) { %>
+        imgs.push(("<%=memes[i].url%>"));
+        likes.push(<%=memes[i].likes%>);
+        ids.push('<%=memes[i]._id%>');
+    <%} %>
+    console.log(ids);
+    console.log(imgs);
+    console.log(likes);
     var meme = document.getElementById('meme');
-    meme.innerHTML = '<img src="' +imgs[0] + '">';
+    var likes_span = document.getElementById('likes')
+    var like_button = document.getElementById('like-button')
+
+
+    meme.innerHTML = '<img src=\"' +imgs[0] + '\" class=\'img-thumbnail img-rounded\'>'
+    likes_span.innerHTML =  likes[0];
+    like_button.innerHTML ="<a id=\'liked\' href=\"\/" + ids[0] + "\">like</a>";
     var controller = new Leap.Controller({
         enableGestures: true,
         frameEventName: 'animationFrame'
@@ -61,11 +78,13 @@
 
                 case "circle":
                     if (gesture.state === "stop") {
-                        if (count === 0){
-                            count = (imgs.length - 1);
-                        } else {
-                            count--;
-                        }
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('GET', '\/' +ids[count], true);
+                        xhr.send();
+                        var xhr2 = new XMLHttpRequest();
+                        xhr2.open('GET', '\/' , true);
+                        xhr2.send();
+                        likes_span.innerHTML =  likes[count];
                         console.log("Circle");
                         $('#gesture').html("Circle");
                     }
@@ -97,7 +116,10 @@
 
             }
             //console.log(count);
-            meme.innerHTML = '<img src="' +imgs[count] + '">'
+            meme.innerHTML = '<img src=\"' +imgs[count] + '\" class=\'img-thumbnail img-rounded\'>'
+            likes_span.innerHTML =  likes[count];
+            like_button.innerHTML ="<a id=\'liked\' href=\"\/" + ids[count] + "\">like</a>";
+
         }
     });
     controller.connect();
