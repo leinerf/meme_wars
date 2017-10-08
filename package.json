@@ -1,16 +1,27 @@
 {
   "name": "leap-app",
-  "version": "0.0.1",
-  "engines": {
-    "node": "0.10.x",
-    "npm": "1.2.x"
-  },
+  "version": "1.0.0",
+  "description": "leap motion webapp",
   "main": "app.js",
-  "description": "leap-app",
   "dependencies": {
     "ejs": "^2.5.7",
     "express": "^4.16.1",
-    "leapjs": "0.2.1",
+    "leapjs": "^0.6.4",
     "mongoose": "^4.12.0"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leinerf/meme_wars.git"
+  },
+  "author": "James Freniel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leinerf/meme_wars/issues"
+  },
+  "homepage": "https://github.com/leinerf/meme_wars#readme"
 }

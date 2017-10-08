@@ -78,13 +78,13 @@
 
                 case "circle":
                     if (gesture.state === "stop") {
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('GET', '\/' +ids[count], true);
-                        xhr.send();
-                        var xhr2 = new XMLHttpRequest();
-                        xhr2.open('GET', '\/' , true);
-                        xhr2.send();
-                        likes_span.innerHTML =  likes[count];
+                        if (count === 0){
+                            count = (imgs.length - 1);
+
+
+                        } else {
+                            count--;
+                        }
                         console.log("Circle");
                         $('#gesture').html("Circle");
                     }

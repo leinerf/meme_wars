@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Meme = require('../models/meme');
 
+
+
 router.get('/',function(req, res){
 
     Meme.find({},function(err,memes){
