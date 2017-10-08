@@ -1,5 +1,6 @@
+var database = process.env.DATABASEURL
 var mongoose = require("mongoose");
-mongoose.connect('mongodb://'+dbuser+':'+dbpassword+'@ds113785.mlab.com:13785/memeshack4',{useMongoClient:true});
+mongoose.connect(database,{useMongoClient:true});
 
 var memeSchema = new mongoose.Schema({
     url: String,
